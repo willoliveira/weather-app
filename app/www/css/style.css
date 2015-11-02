@@ -1,1 +1,64 @@
-/* Empty. Add your own CSS if you like */
+.item-animate {
+  left: 0;
+  top: 0 !important;
+  width: 100%;
+  position: absolute;
+  background-color: #DDDDDD;
+}
+
+.item-animate.ng-hide-add,
+.item-animate.ng-hide-remove {
+  display: block !important;
+  left: 0;
+}
+
+
+.item-animate.ng-hide-add {
+  -webkit-animation:hideAnim .5s linear 1s;
+  animation:hideAnim .5s linear 1s;
+}
+
+@keyframes hideAnim {
+  from { left: 0; }
+  to { left: -100%; }
+}
+
+@-webkit-keyframes hideAnim {
+  from { left: 0; }
+  to { left: -100%; }
+}
+
+/*.item-animate.ng-hide-remove {*/
+.item-animate.ng-enter {
+  left: 100%;
+  -webkit-animation: showAnim .5s linear 1s;
+  animation: showAnim .5s linear 1s;
+  top: -51px;
+}
+
+@keyframes showAnim {
+  from { left: 100%; }
+  to { left: 0; }
+}
+
+@-webkit-keyframes showAnim {
+  from { left: 100%; }
+  to { left: 0; }
+}
+
+.first.ng-enter {
+  opacity: 0;
+  left: 0;
+  -webkit-animation: opacityAnim 0.5s linear;
+  animation: opacityAnim 0.5s linear;
+}
+
+@keyframes opacityAnim {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@-webkit-keyframes opacityAnim {
+  from { opacity: 0; }
+  to { opacity: .9; }
+}

@@ -17,7 +17,7 @@
                 ng-options="country.name for country in countries.geonames | orderBy:country.name track by country.geonameId"
                 ng-change="loadComboGeo('cities', geo.country.geonameId)"
                 ng-model="geo.country">
-          <option value="">Selecione um pais</option>
+          <option value="">Selecione um estado</option>
         </select>
       </label>
       <!-- seleciona os paises -->
@@ -33,7 +33,7 @@
         </select>
       </label>
     </div>
-    <button class="button button-light" ng-click="updateWeather()" ng-enable="geo.country & geo.city">ADD</button>
+    <button class="button button-block button-positive" ng-click="updateWeather()" ng-enable="geo.country & geo.city">ADD</button>
 
 
   </ion-content>

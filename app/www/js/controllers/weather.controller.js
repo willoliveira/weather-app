@@ -4,34 +4,38 @@
     .module('app.controllers')
     .controller('WeatherController', WeatherController);
 
-  WeatherController.$inject = ['$scope', '$timeout', 'GeolocationService', 'GeoNameService', 'localStorageService', '$ionicSlideBoxDelegate', '$ionicModal'];
+  WeatherController.$inject = ['$scope', '$timeout', 'GeolocationService', 'GeoNameService', 'localStorageService', '$animate', '$ionicModal'];
 
-  function WeatherController($scope, $timeout, GeolocationService, GeoNameService, localStorageService, $ionicSlideBoxDelegate, $ionicModal) {
-
+  function WeatherController($scope, $timeout, GeolocationService, GeoNameService, localStorageService, $animate,   $ionicModal) {
     var
       locationParams,
       locationName = "",
       modalSelect;
 
-      $scope.countries = null;
-      $scope.cities = {};
-      $scope.citySelect = {};
+    /*public vars*/
+    $scope.currentIndex = 0;
+    $scope.countries = null;
+    $scope.cities = {};
+    $scope.citySelect = {};
+    $scope.geo = {country: "", city: ""};
+    //Armazenando os dados da temperatura
+    //$scope.Temp = {};
+    $scope.Temp = [];
 
-      $scope.geo = {country: "", city: ""};
-
+    /*public function*/
     $scope.openModal = openModal;
     $scope.closeModal = closeModal;
     $scope.loadComboGeo = loadComboGeo;
     $scope.updateWeather = updateWeather;
 
-
-    //Armazenando os dados da temperatura
-    $scope.Temp = {};
+    $scope.teste = function(elem) {
+      if ($scope.Temp.length == 1)
+        $animate.off('enter');
+      console.log(elem);
+    };
 
     /* init */
     function init() {
-      //Tira o slide do slide box
-      $ionicSlideBoxDelegate.enableSlide(false);
       //Get location params in local storage
       locationParams = localStorageService.get("location");
 
@@ -90,7 +94,9 @@
      *
      */
     function updateWeather() {
+      //feche a modal
       $scope.closeModal();
+      //feche a modal
       loadWeather($scope.geo.city.name + "-" + $scope.geo.country.name);
     }
 
@@ -137,18 +143,22 @@
      * @param response
      */
     function configureData(response) {
-      $scope.Temp = response.data;
-      var
-        //index = $scope.Temp.indexOf(response.data);//,
-        dateCache = $scope.Temp;
+      var t;
+      //cache
+      t = response.data;
       //Tranforma o dia atual em date
-      dateCache.agora.data_hora = new Date($scope.Temp.agora.data_hora.replace(/\//g, "-").replace(/\s/g, ""));
-      for (var cont = 0; cont < dateCache.previsoes.length; cont++) {
+      t.agora.data_hora = new Date(t.agora.data_hora.replace(/\//g, "-").replace(/\s/g, ""));
+      for (var cont = 0; cont < t.previsoes.length; cont++) {
         //Tranforma o dia das previsões em date
-        var date = dateCache.previsoes[cont].data.replace(/\//g, "-").replace(/\s/g, "");
-        dateCache.previsoes[cont].data = new Date(date);
+        var date = t.previsoes[cont].data.replace(/\//g, "-").replace(/\s/g, "");
+        t.previsoes[cont].data = new Date(date);
       }
-      console.log($scope.Temp)
+      //Adiciona no array
+      $scope.Temp.push(response.data);
+      //seta o index atual
+      $scope.currentIndex = $scope.Temp.length - 1;
+
+      console.log($scope.Temp);
     }
     /**
      *
