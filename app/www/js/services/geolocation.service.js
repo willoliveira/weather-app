@@ -25,24 +25,22 @@
 
       return deferred.promise;
     }
+      function getLocationSucess(location) {
+        deferred.resolve({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          accuracy: location.coords.accuracy
+        });
+      }
 
-    function getLocationSucess(location) {
-      deferred.resolve({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        accuracy: location.coords.accuracy
-      });
-    }
-
-    function getLocationError() {
-      deferred.reject("error");
-    }
+      function getLocationError() {
+        deferred.reject("error");
+      }
 
     function getReverseLocation(param) {
       return $http
         .get(ConfigService.URL_REVERSE_LOCATION + '?latlng='+ param.latitude +',' + param.longitude + '&sensor=true');
     }
-
 
     function getTemp(param) {
       return $http

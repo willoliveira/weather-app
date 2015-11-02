@@ -4,41 +4,105 @@
     .module('app.controllers')
     .controller('WeatherController', WeatherController);
 
-  WeatherController.$inject = ['$scope', '$timeout', 'GeolocationService', 'localStorageService', '$ionicSlideBoxDelegate', '$ionicModal'];
+  WeatherController.$inject = ['$scope', '$timeout', 'GeolocationService', 'GeoNameService', 'localStorageService', '$ionicSlideBoxDelegate', '$ionicModal'];
 
-  function WeatherController($scope, $timeout, GeolocationService, localStorageService, $ionicSlideBoxDelegate, $ionicModal) {
+  function WeatherController($scope, $timeout, GeolocationService, GeoNameService, localStorageService, $ionicSlideBoxDelegate, $ionicModal) {
 
     var
       locationParams,
       locationName = "",
       modalSelect;
 
-    //$scope.Temp = [];
+      $scope.countries = null;
+      $scope.cities = {};
+      $scope.citySelect = {};
+
+      $scope.geo = {country: "", city: ""};
+
+    $scope.openModal = openModal;
+    $scope.closeModal = closeModal;
+    $scope.loadComboGeo = loadComboGeo;
+    $scope.updateWeather = updateWeather;
+
+
+    //Armazenando os dados da temperatura
     $scope.Temp = {};
 
+    /* init */
     function init() {
-
+      //Tira o slide do slide box
       $ionicSlideBoxDelegate.enableSlide(false);
-
       //Get location params in local storage
       locationParams = localStorageService.get("location");
-      if (locationParams)
-        GeolocationService.getReverseLocation(locationParams).then(parseLocation);
-      //loadWeather(locationParams);
 
+      //Pega os estados salvos
+      //$scope.countries = localStorageService.get("countries");
+
+      //Se eu ja tiver a localização
+      if (locationParams) GeolocationService.getReverseLocation(locationParams).then(parseLocation);
+      //Pega o template da modal
       $ionicModal.fromTemplateUrl('views/modal-select.html', { scope: $scope }).then(function(modal) {
         modalSelect = modal;
       });
     }
 
-    $scope.openModal = function() {
+    /**
+     * public functions
+     */
+
+    /**
+     *
+     */
+    function openModal() {
+      $scope.geo = {country: "", city: ""};
       modalSelect.show();
-    };
-
-    $scope.closeModal = function() {
+      //
+      initCombo();
+    }
+    /**
+     *
+     */
+    function closeModal() {
       modalSelect.hide();
-    };
+    }
+    /**
+     *
+     * @param name
+     * @param geoId
+     */
+    function loadComboGeo(name, geoId) {
+      //Se ja possuir os estados ou as cidades
+      if ((name == 'cities' && $scope[name][geoId]) ||
+        (name == 'countries' && $scope[name])) {
+        return;
+      }
+      GeoNameService.getGeoName(geoId).then(function(response) {
+        var data = response.data;
+        if (name == 'cities') {
+          if ($scope[name][geoId]) $scope[name][geoId] = {};
+          $scope[name][geoId] = data;
+        }
+        else $scope[name] = data;
+      });
+    }
 
+    /**
+     *
+     */
+    function updateWeather() {
+      $scope.closeModal();
+      loadWeather($scope.geo.city.name + "-" + $scope.geo.country.name);
+    }
+
+    /**
+     * private functions
+     *
+     */
+
+    /**
+     *
+     * @param response
+     */
     function parseLocation(response) {
       var arr = response.data.results;
       //formatted_address: "Bauru, Bauru - SP, Brasil"
@@ -59,16 +123,20 @@
         }
       }
     }
-
+    /**
+     *
+     * @param locationName
+     */
     function loadWeather(locationName) {
       GeolocationService
         .getTemp(locationName)
         .then(configureData);
     }
-
+    /**
+     *
+     * @param response
+     */
     function configureData(response) {
-      //pega a data
-      //$scope.Temp.push(response.data);
       $scope.Temp = response.data;
       var
         //index = $scope.Temp.indexOf(response.data);//,
@@ -81,6 +149,12 @@
         dateCache.previsoes[cont].data = new Date(date);
       }
       console.log($scope.Temp)
+    }
+    /**
+     *
+     */
+    function initCombo() {
+      if (!$scope.countries) loadComboGeo('countries', 3469034);
     }
 
     // trigger init when the view is ready
