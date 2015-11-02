@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+  </head>
+  <body ng-app="WeatherApp">
+
+    <ion-nav-view name="viewPrincipal" ng-controoller="DefaultController" animation="slide-left-right"></ion-nav-view>
+
+    <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
+
+    <script src="js/app.module.js"></script>
+    <script src="js/app.run.js"></script>
+    <script src="js/app.config.js"></script>
+    <script src="js/app.routes.js"></script>
+
+    <script src="js/services/service.module.js"></script>
+    <script src="js/services/config.js"></script>
+    <script></script>
+    <script src="js/services/geolocation.service.js"></script>
+    <script src="js/services/weather.service.js"></script>
+
+    <script src="js/controllers/controller.module.js"></script>
+    <script src="js/controllers/home.controller.js"></script>
+    <script src="js/controllers/weather.controller.js"></script>
+
+  </body>
+</html>

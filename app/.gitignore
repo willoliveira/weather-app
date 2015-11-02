@@ -1,0 +1,8 @@
+# node modules
+node_modules/
+
+# dir platforms android
+platforms/
+
+# plugins cordova
+plugins/
