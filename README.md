@@ -6,14 +6,14 @@ Instruções:
 Instanlando o ionic e o cordova
 npm install ionic cordova -g
 
-Instalando as dependencias
-npm install
-bower install
+<h1>Instalando as dependencias</h1>
+<p>npm install</p>
+<p>bower install</p>
 
-Testando no browser
-ionic serve
+<h1>Testando no browser</h1>
+<p>ionic serve</p>
 
-Testando no android
+<h1>Testando no android</h1>
 ionic build android
 ionic run android
 
