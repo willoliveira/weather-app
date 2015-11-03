@@ -149,22 +149,21 @@
     function configureData(response) {
       //seta erro de conexao como false
       $scope.errorConexao = false;
-      console.log(response);
-
       if (!response.data || response.data.erro) {
         alert("cidade não encontrada");
         return;
       }
-
-      var w;
+      var w, dateStr = "";
       //cache
       w = response.data;
       //Tranforma o dia atual em date
-      w.agora.data_hora = new Date(w.agora.data_hora.replace(/\//g, "-").replace(/\s/g, ""));
+      dateStr = w.agora.data_hora.match(/[\d][\d]{1,}/g);
+      w.agora.data_hora = new Date(dateStr[2], dateStr[1] - 1, dateStr[0]);
       for (var cont = 0; cont < w.previsoes.length; cont++) {
         //Tranforma o dia das previsões em date
-        var date = w.previsoes[cont].data.replace(/\//g, "-").replace(/\s/g, "");
-        w.previsoes[cont].data = new Date(date);
+        console.log(w.previsoes[cont].data, w.previsoes[cont].data.match(/[\d][\d]{1,}/g))
+        var date = w.previsoes[cont].data.match(/[\d][\d]{1,}/g);
+        w.previsoes[cont].data = new Date(date[2], date[1] - 1, date[0]);
       }
       //Adiciona no array
       $scope.weather.push(response.data);
@@ -182,7 +181,6 @@
     }
 
     function errorRequest(response) {
-      console.log(response);
       var weather = localStorageService.get("weather");
       if (weather) {
         $scope.errorConexao = false;

@@ -30,7 +30,7 @@
                   ng-init="setWidth(this, weather[$index].previsoes.length)">
         <!--  ng-style="{'width': (weather[$index].previsoes.length * 132) + 'px'}" -->
         <div class="previsao" ng-repeat="prev in weather[$index].previsoes">
-          <p>{{prev.data | date:"EEE dd"}}</p>
+          <p>{{prev.data | date:"EEE d"}}</p>
           <img ng-src="{{prev.imagem}}"/>
 
           <p>
