@@ -1,6 +1,9 @@
 # node modules
 node_modules/
 
+# bower
+www/lib
+
 # dir platforms android
 platforms/
 

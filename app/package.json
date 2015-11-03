@@ -1,7 +1,7 @@
 {
   "name": "weather-app",
   "version": "1.0.0",
-  "description": "Aplicativo tem o objetivo de mostrar a previs�ão do tempo para os próximos dias",
+  "description": "Aplicativo tem o objetivo de mostrar a previsao do tempo para os próximos dias",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
@@ -25,7 +25,10 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
+    "cordova-plugin-geolocation",
     "ionic-plugin-keyboard"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

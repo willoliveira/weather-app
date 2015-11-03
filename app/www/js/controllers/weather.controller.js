@@ -4,9 +4,9 @@
     .module('app.controllers')
     .controller('WeatherController', WeatherController);
 
-  WeatherController.$inject = ['$scope', '$timeout', 'GeolocationService', 'GeoNameService', 'localStorageService', '$animate', '$ionicModal'];
+  WeatherController.$inject = ['$scope', '$timeout', 'GeolocationService', 'GeoNameService', 'localStorageService', '$ionicModal'];
 
-  function WeatherController($scope, $timeout, GeolocationService, GeoNameService, localStorageService, $animate,   $ionicModal) {
+  function WeatherController($scope, $timeout, GeolocationService, GeoNameService, localStorageService,  $ionicModal) {
     var
       locationParams,
       locationName = "",
@@ -18,32 +18,27 @@
     $scope.cities = {};
     $scope.citySelect = {};
     $scope.geo = {country: "", city: ""};
+    $scope.errorConexao = false;
     //Armazenando os dados da temperatura
-    //$scope.Temp = {};
-    $scope.Temp = [];
+    $scope.weather = [];
 
     /*public function*/
     $scope.openModal = openModal;
     $scope.closeModal = closeModal;
     $scope.loadComboGeo = loadComboGeo;
     $scope.updateWeather = updateWeather;
-
-    $scope.teste = function(elem) {
-      if ($scope.Temp.length == 1)
-        $animate.off('enter');
-      console.log(elem);
-    };
-
+    $scope.setWidth = setWidth;
     /* init */
     function init() {
       //Get location params in local storage
       locationParams = localStorageService.get("location");
-
-      //Pega os estados salvos
-      //$scope.countries = localStorageService.get("countries");
-
       //Se eu ja tiver a localização
-      if (locationParams) GeolocationService.getReverseLocation(locationParams).then(parseLocation);
+      if (locationParams)
+        GeolocationService
+          .getReverseLocation(locationParams)
+          .then(parseLocation, errorRequest);
+      else
+        loadWeather('Acrelandia-Acre');
       //Pega o template da modal
       $ionicModal.fromTemplateUrl('views/modal-select.html', { scope: $scope }).then(function(modal) {
         modalSelect = modal;
@@ -59,6 +54,7 @@
      */
     function openModal() {
       $scope.geo = {country: "", city: ""};
+      //
       modalSelect.show();
       //
       initCombo();
@@ -100,6 +96,14 @@
       loadWeather($scope.geo.city.name + "-" + $scope.geo.country.name);
     }
 
+
+    function setWidth (elem, num) {
+      var scroll = document.querySelectorAll(".previsoes .scroll");
+      for (var cont = 0; cont < scroll.length; cont++) {
+        scroll[cont].style.width = num * 132 + "px";
+      }
+    }
+
     /**
      * private functions
      *
@@ -135,36 +139,57 @@
      */
     function loadWeather(locationName) {
       GeolocationService
-        .getTemp(locationName)
-        .then(configureData);
+        .getWeather(locationName)
+        .then(configureData, errorRequest);
     }
     /**
      *
      * @param response
      */
     function configureData(response) {
-      var t;
+      //seta erro de conexao como false
+      $scope.errorConexao = false;
+      console.log(response);
+
+      if (!response.data || response.data.erro) {
+        alert("cidade não encontrada");
+        return;
+      }
+
+      var w;
       //cache
-      t = response.data;
+      w = response.data;
       //Tranforma o dia atual em date
-      t.agora.data_hora = new Date(t.agora.data_hora.replace(/\//g, "-").replace(/\s/g, ""));
-      for (var cont = 0; cont < t.previsoes.length; cont++) {
+      w.agora.data_hora = new Date(w.agora.data_hora.replace(/\//g, "-").replace(/\s/g, ""));
+      for (var cont = 0; cont < w.previsoes.length; cont++) {
         //Tranforma o dia das previsões em date
-        var date = t.previsoes[cont].data.replace(/\//g, "-").replace(/\s/g, "");
-        t.previsoes[cont].data = new Date(date);
+        var date = w.previsoes[cont].data.replace(/\//g, "-").replace(/\s/g, "");
+        w.previsoes[cont].data = new Date(date);
       }
       //Adiciona no array
-      $scope.Temp.push(response.data);
+      $scope.weather.push(response.data);
+      //Guarda em localStorage
+      localStorageService.set("weather", response.data);
       //seta o index atual
-      $scope.currentIndex = $scope.Temp.length - 1;
-
-      console.log($scope.Temp);
+      $scope.currentIndex = $scope.weather.length - 1;
     }
     /**
      *
      */
     function initCombo() {
-      if (!$scope.countries) loadComboGeo('countries', 3469034);
+      if (!$scope.countries)
+        loadComboGeo('countries', 3469034);
+    }
+
+    function errorRequest(response) {
+      console.log(response);
+      var weather = localStorageService.get("weather");
+      if (weather) {
+        $scope.errorConexao = false;
+        $scope.weather.push(weather);
+      } else
+        $scope.errorConexao = true;
+
     }
 
     // trigger init when the view is ready

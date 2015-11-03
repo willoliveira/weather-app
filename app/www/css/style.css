@@ -1,10 +1,52 @@
+/*font material design*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url(../lib/material-design-icons/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+  url(../lib/material-design-icons/iconfont/MaterialIcons-Regular.woff) format('woff'),
+  url(../lib/material-design-icons/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+
+/*Animation transicao de weather*/
 .item-animate {
   left: 0;
   top: 0 !important;
   width: 100%;
   position: absolute;
-  background-color: #DDDDDD;
 }
+
 
 .item-animate.ng-hide-add,
 .item-animate.ng-hide-remove {
@@ -14,8 +56,8 @@
 
 
 .item-animate.ng-hide-add {
-  -webkit-animation:hideAnim .5s linear 1s;
-  animation:hideAnim .5s linear 1s;
+  -webkit-animation:hideAnim .3s linear;
+  animation:hideAnim .3s linear;
 }
 
 @keyframes hideAnim {
@@ -31,8 +73,8 @@
 /*.item-animate.ng-hide-remove {*/
 .item-animate.ng-enter {
   left: 100%;
-  -webkit-animation: showAnim .5s linear 1s;
-  animation: showAnim .5s linear 1s;
+  -webkit-animation: showAnim .3s linear;
+  animation: showAnim .3s linear;
   top: -51px;
 }
 
@@ -49,8 +91,8 @@
 .first.ng-enter {
   opacity: 0;
   left: 0;
-  -webkit-animation: opacityAnim 0.5s linear;
-  animation: opacityAnim 0.5s linear;
+  -webkit-animation: opacityAnim 0.2s linear;
+  animation: opacityAnim 0.2s linear;
 }
 
 @keyframes opacityAnim {
@@ -62,3 +104,60 @@
   from { opacity: 0; }
   to { opacity: .9; }
 }
+
+/*custom ionic */
+.scroll-content {
+  background-color: #62bafd;
+  color: #FFF;
+}
+.item {border:  0; }
+
+.item-animate .bar-header {
+  position: relative;
+  background-color: #508cbd !important;
+
+}
+  .item-animate .bar-header h1 { color: #FFFFFF !important; }
+  .item-animate .bar-header i {
+    position: absolute;
+    line-height: inherit;
+    padding-left: 10px;
+  }
+
+.dia_atual {
+  text-align: center;
+  margin: 0 auto;
+  color: #FFF !important;
+}
+  .dia_atual .item {
+    background-color: #62bafd;
+  }
+.temp-graus {
+  font-size: 78px;
+}
+.temp-graus-indicacao {
+  font-size: 30px;
+  position: absolute;
+  top: 32px
+}
+
+.dia-atual_descricao, .dia-atual_data {
+  color: #FFF !important;
+  font-size: 18px !important;
+}
+
+
+.previsao {
+  float: left;
+  width: 132px;
+  text-align: center;
+}
+
+/*modal*/
+.modal ion-content {
+  background-color: #FFF;
+}
+.modal .bar-header {
+  background-color: #508cbd !important;
+}
+

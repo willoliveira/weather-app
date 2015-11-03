@@ -6,19 +6,9 @@
 
   HomeController.$inject = ['$scope', '$timeout', '$state','GeolocationService', 'localStorageService'];
 
-  function HomeController($scope, $timeout, $state, GeolocationService, localStorageService) {
+  function HomeController($scope, $timeout) {
 
-    function init() {
-      GeolocationService.get()
-        .then(function(location) {
-          //Salva a localização em local storage
-          localStorageService.set("location", location);
-          //manda eles para a pagina do weather
-          $state.go('weather');
-        }, function(errorMessage) {
-          console.log(errorMessage);
-        });
-    }
+    function init() { }
     // trigger init when the view is ready
     $timeout(init, 0);
   }

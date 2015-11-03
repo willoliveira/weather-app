@@ -13,7 +13,7 @@
       service =  {
         get: get,
         getReverseLocation: getReverseLocation,
-        getTemp: getTemp
+        getWeather: getWeather
       };
 
     return service;
@@ -42,7 +42,7 @@
         .get(ConfigService.URL_REVERSE_LOCATION + '?latlng='+ param.latitude +',' + param.longitude + '&sensor=true');
     }
 
-    function getTemp(param) {
+    function getWeather(param) {
       return $http
         .get(ConfigService.URL_GET_TEMP + param);
     }

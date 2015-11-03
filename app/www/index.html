@@ -12,24 +12,26 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
   </head>
-  <body ng-app="WeatherApp">
+  <body ng-app="WeatherApp" ng-controller="DefaultController" >
+    <ion-nav-view name="viewPrincipal" animation="slide-left-right"></ion-nav-view>
 
-    <ion-nav-view name="viewPrincipal" ng-controoller="DefaultController" animation="slide-left-right"></ion-nav-view>
-
+    <!--lib's-->
     <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
-
+    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <!--app's-->
     <script src="js/app.module.js"></script>
     <script src="js/app.run.js"></script>
     <script src="js/app.config.js"></script>
     <script src="js/app.routes.js"></script>
-
+    <!--services-->
     <script src="js/services/service.module.js"></script>
     <script src="js/services/config.js"></script>
-
     <script src="js/services/geolocation.service.js"></script>
     <script src="js/services/geonames.service.js"></script>
-
+    <!--controllers-->
     <script src="js/controllers/controller.module.js"></script>
+    <script src="js/controllers/main.controller.js"></script>
     <script src="js/controllers/home.controller.js"></script>
     <script src="js/controllers/weather.controller.js"></script>
 

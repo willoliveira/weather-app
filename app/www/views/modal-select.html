@@ -1,7 +1,7 @@
 <ion-modal-view>
   <ion-header-bar align-title="left" class="bar-positive">
     <div class="buttons">
-      <button class="button button-icon icon" ng-click="closeModal()">VOLTAR</button>
+      <button class="button button-icon icon" ng-click="closeModal()"><i class="material-icons">&#xE317;</i></button>
     </div>
     <h1 class="title">Cidades</h1>
   </ion-header-bar>
@@ -9,6 +9,7 @@
 
     <div class="list">
       <!-- seleciona os paises -->
+      <ion-item>
       <label class="item item-input item-select pull-left">
         <div class="input-label">
           &nbsp;
@@ -20,6 +21,8 @@
           <option value="">Selecione um estado</option>
         </select>
       </label>
+      </ion-item>
+      <ion-item>
       <!-- seleciona os paises -->
       <label class="item item-input item-select">
         <div class="input-label">
@@ -32,8 +35,9 @@
           <option value="">Selecione uma cidade</option>
         </select>
       </label>
+      </ion-item>
     </div>
-    <button class="button button-block button-positive" ng-click="updateWeather()" ng-enable="geo.country & geo.city">ADD</button>
+    <button class="button button-positive" ng-click="updateWeather()" ng-enable="geo.country & geo.city">ADD</button>
 
 
   </ion-content>

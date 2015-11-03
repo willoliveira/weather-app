@@ -5,6 +5,7 @@
     "ionic": "driftyco/ionic-bower#1.1.0"
   },
   "dependencies": {
-    "angular-local-storage": "~0.2.3"
+    "angular-local-storage": "~0.2.3",
+    "material-design-icons": "~2.0.0"
   }
 }
