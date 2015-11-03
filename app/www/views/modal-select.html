@@ -12,13 +12,13 @@
       <ion-item>
       <label class="item item-input item-select pull-left">
         <div class="input-label">
-          &nbsp;
+          Estado
         </div>
         <select name="cbCountries" id="cbCountries"
                 ng-options="country.name for country in countries.geonames | orderBy:country.name track by country.geonameId"
                 ng-change="loadComboGeo('cities', geo.country.geonameId)"
                 ng-model="geo.country">
-          <option value="">Selecione um estado</option>
+          <option value="">Selecione...</option>
         </select>
       </label>
       </ion-item>
@@ -26,13 +26,13 @@
       <!-- seleciona os paises -->
       <label class="item item-input item-select">
         <div class="input-label">
-          &nbsp;
+          Cidade
         </div>
         <select name="cbCities" id="cbCities"
                 ng-if="geo.country"
                 ng-options="city.name for city in cities[geo.country.geonameId].geonames | orderBy:city.name track by city.geonameId"
                 ng-model="geo.city">
-          <option value="">Selecione uma cidade</option>
+          <option value="">Selecione...</option>
         </select>
       </label>
       </ion-item>

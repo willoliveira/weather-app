@@ -147,6 +147,10 @@
 }
 
 
+.previsoes .scroll {
+  max-width: 700px;
+  margin: 0 auto;
+}
 .previsao {
   float: left;
   width: 132px;
