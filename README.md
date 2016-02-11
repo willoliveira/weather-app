@@ -2,7 +2,7 @@
 Aplicativo feito em Phonegap com o framework [Ionic](http://ionicframework.com/).
 Aplicativo foi desenvolvido com objetivo de estudo da tecnologia, ele consulta uma base de dados pública para mostrar a previsão do tempo.
 
-Para o desenvolvimento, utizei a seguinte algumas API's, essa abaixo foi para consulta do tempo/clima:
+Para o desenvolvimento, utizei algumas API's, essa abaixo foi para consulta do tempo/clima:
 [http://developers.agenciaideias.com.br/tempo/](http://developers.agenciaideias.com.br/tempo/)
 
 Para buscar os estados e cidades, foi esta:
